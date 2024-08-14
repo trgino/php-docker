@@ -1,0 +1,56 @@
+version: '3.8'
+services:
+  php-apache:
+    build: .
+    ports:
+      - "8080:80"
+      - "8443:443"
+      - "3307:3306"  
+      - "27018:27017" 
+      - "15673:15672" 
+      - "5673:5672" 
+      - "6380:6379" 
+    volumes:
+      - ./projects:/var/www
+    depends_on:
+      - mysql
+      - mongodb
+      - lavinmq
+      - redis
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MONGODB_ROOT_USERNAME: ${MONGODB_ROOT_USERNAME}
+      MONGODB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
+      REDIS_HOST: redis
+
+  mysql:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysqldata:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongodbdata:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
+  lavinmq:
+    image: cloudamqp/lavinmq:latest
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - ./lavinmqdata:/var/lib/lavinmq
+
+  redis:
+    image: bitnami/redis:7.2
+    ports:
+      - "6379:6379"
