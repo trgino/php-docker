@@ -25,14 +25,19 @@ RUN apt-get update && apt-get install -y \
     supervisor \
     openssl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
-    && docker-php-ext-install -j$(nproc) gd mbstring pdo pdo_mysql mysqli soap intl zip opcache \
-    && docker-php-ext-install -j$(nproc) sockets \
+    && docker-php-ext-install -j$(nproc) gd mbstring pdo pdo_mysql mysqli soap intl zip ftp xml \
+    && docker-php-ext-install -j$(nproc) sockets mbregex sysvsem mysqlnd mhash bcmath shmop \
+    && docker-php-ext-install -j$(nproc) pcntl \
     && docker-php-ext-install -j$(nproc) exif \
     && pecl install swoole \
     && pecl install imagick \
     && pecl install mongodb \
     && pecl install redis \
-    && docker-php-ext-enable swoole imagick mongodb redis
+    && pecl install yaml \
+    && pecl install mcrypt \
+    && pecl install amqp \
+    && pecl install psr \
+    && docker-php-ext-enable swoole imagick mongodb redis yaml mcrypt amqp psr 
 
 # Install Composer globally
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

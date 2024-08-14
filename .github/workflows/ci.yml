@@ -23,7 +23,7 @@ jobs:
       run: |
         docker compose  up -d
         # Test if the main service is running
-        docker-compose exec -T php-apache-1 curl -f http://localhost:8080 || exit 1
+        docker compose exec -T php-apache curl -f http://localhost:8080 || exit 1
 
     - name: Tear down Docker Compose
-      run: docker-compose down
+      run: docker compose down
