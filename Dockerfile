@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
     libssl-dev \
     libevent-dev \
+    librabbitmq-dev \
     autoconf \
     pkg-config \
     zlib1g-dev \
