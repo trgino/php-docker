@@ -5,11 +5,6 @@ services:
     ports:
       - "8080:80"
       - "8443:443"
-      - "3307:3306"  
-      - "27018:27017" 
-      - "15673:15672" 
-      - "5673:5672" 
-      - "6380:6379" 
     volumes:
       - ./projects:/var/www
     depends_on:
@@ -54,3 +49,6 @@ services:
     image: bitnami/redis:7.2
     ports:
       - "6379:6379"
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      ALLOW_EMPTY_PASSWORD: ${REDIS_ALLOW_EMPTY_PASSWORD}
