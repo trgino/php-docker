@@ -46,7 +46,7 @@ services:
       - ./lavinmqdata:/var/lib/lavinmq
 
   redis:
-    image: bitnami/redis:7.2
+    image: bitnami/redis:latest
     ports:
       - "6379:6379"
     environment:
